@@ -2,7 +2,7 @@ package ie.atu.week3;
 
 
 public class Student {
-    String Name, Email, Course;
+    private String Name, Email, Course;
 
     public  Student()
     {
@@ -16,4 +16,12 @@ public class Student {
         Course = tcourse;
     }
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "Name='" + Name + '\'' +
+                ", Email='" + Email + '\'' +
+                ", Course='" + Course + '\'' +
+                '}';
+    }
 }
