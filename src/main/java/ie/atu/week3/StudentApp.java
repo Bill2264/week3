@@ -19,7 +19,17 @@ public class StudentApp {
 
         while(count<totalStudents)
         {
-
+            System.out.println("Please enter your name: ");
+            String name = scan1.next();
+            System.out.println("Please enter your email: ");
+            String email = scan1.next();
+            System.out.println("Please enter your course name: ");
+            String course = scan1.next();
+            student.addStudent(name, email, course);
+            students.add(student);
+            count++;
         }
     }
+
+
 }
