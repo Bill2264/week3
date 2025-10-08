@@ -10,7 +10,7 @@ public class Student {
         Email = "";
         Course = "";
     }
-    public Student(String tname,String temail,String tcourse) {
+    public void addStudent(String tname,String temail,String tcourse) {
         Name = tname;
         Email = temail;
         Course = tcourse;
