@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class StudentApp {
     static void main(String [] args) {
         int count = 0;
+        boolean check = false;
 
         List<Student> students = new ArrayList<>();//creates array list
         Scanner scan1 = new Scanner(System.in);
@@ -23,17 +24,29 @@ public class StudentApp {
             //inputs name
             System.out.println("Please enter your name: ");
             String name = scan1.next();
+            student.setName(name);
 
             //inputs email
-            System.out.println("Please enter your email: ");
-            String email = scan1.next();
+            do {
+                System.out.println("Please enter your email: ");
+                String email = scan1.next();
+                //verifies if email is not already in use
+            for(Student s:students) {
+                    if (s.getEmail().contains(email)) {
+                        System.out.println("Sorry, email already in use, please enter a new email");
+                        break;
+                    }
+                    check = false;
+                }
+                student.setEmail(email);
+            }while (check);
+            check = true;
 
             //inputs course name
             System.out.println("Please enter your course name: ");
             String course = scan1.next();
+            student.setCourse(course);
 
-            //updates object and adds to arraylist
-            student.addStudent(name, email, course);
             students.add(student);
 
             //increments count

@@ -10,10 +10,29 @@ public class Student {
         Email = "";
         Course = "";
     }
-    public void addStudent(String tname,String temail,String tcourse) {
-        Name = tname;
-        Email = temail;
-        Course = tcourse;
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public void setCourse(String course) {
+        Course = course;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public String getCourse() {
+        return Course;
     }
 
     @Override
