@@ -1,16 +1,17 @@
 package ie.atu.week3;
 
-import java.util.List;
+import java.io.*;
+
+
 import java.util.Scanner;
-import java.util.ArrayList;
+
 
 
 public class StudentApp {
-    static void main(String [] args) {
+    static void main() {
         int count = 0;
-        boolean check = false;
+        boolean check;
 
-        List<Student> students = new ArrayList<>();//creates array list
         Scanner scan1 = new Scanner(System.in);
 
 
@@ -31,33 +32,82 @@ public class StudentApp {
                 System.out.println("Please enter your email: ");
                 String email = scan1.next();
                 //verifies if email is not already in use
-            for(Student s:students) {
-                    if (s.getEmail().contains(email)) {
-                        System.out.println("Sorry, email already in use, please enter a new email");
-                        break;
-                    }
-                    check = false;
-                }
+                check=checkFile(email);
                 student.setEmail(email);
             }while (check);
-            check = true;
+
 
             //inputs course name
             System.out.println("Please enter your course name: ");
             String course = scan1.next();
             student.setCourse(course);
 
-            students.add(student);
-
+            try(PrintWriter out = new PrintWriter(new FileWriter("Student.txt", true)))//if file valid
+            {
+                out.println(student);
+                System.out.println("saved to " + "Student.txt");
+            }
+            catch(IOException ex)//if error occurs
+            {
+                System.out.println("Could not write to file: " + ex.getMessage());
+            }
             //increments count
             count++;
         }
 
         //displays student data
-        System.out.println("Student List:");
-        for (Student s : students) {
-            System.out.println(s);
-        }
 
+        showFile();
+
+    }
+    static void showFile() {
+        BufferedReader br = null;
+        try {
+            FileReader neverUsed = new FileReader("student.txt");//finds file
+            br = new BufferedReader(neverUsed);
+            System.out.println("Contents of student.txt:");
+            String line;
+            while ((line = br.readLine()) != null) {//prints till file empty
+                System.out.println(" - " + line);
+            }
+        } catch (IOException ex) {//error if file not found
+            System.out.println("Could not read file: " + ex.getMessage());
+        } finally {
+            if (br != null) {//closes file
+                try {
+                    br.close();
+                } catch (IOException ex) {//error if file not closed
+                    System.out.println("Could not close file: " + ex.getMessage());
+                }
+            }
+        }
+    }
+    static boolean checkFile(String email) {
+        BufferedReader br = null;
+        try {
+            FileReader neverUsed = new FileReader("student.txt");//finds file
+            br = new BufferedReader(neverUsed);
+            String line;
+
+            while ((line = br.readLine()) != null) {//prints till file empty
+                if(line.contains(email))
+                {
+                    System.out.println("Sorry, email already in use, please enter a new email");
+                    return true;
+                }
+            }
+            return false;
+        } catch (IOException ex) {//error if file not found
+            System.out.println("Could not read file: " + ex.getMessage());
+        } finally {
+            if (br != null) {//closes file
+                try {
+                    br.close();
+                } catch (IOException ex) {//error if file not closed
+                    System.out.println("Could not close file: " + ex.getMessage());
+                }
+            }
+        }
+        return true;
     }
 }
